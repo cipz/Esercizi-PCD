@@ -1,11 +1,3 @@
 # Temporary ignore
 
-lab2/
-
-#
-!audit-merkle.png
-!*.java
-!src/*
-!build.gradle
-!settings.gradle
-
+# Do not ignore

@@ -1,0 +1,7 @@
+student/bin/
+library/bin/
+*.sh
+*.class
+*.project
+*.classpath
+
