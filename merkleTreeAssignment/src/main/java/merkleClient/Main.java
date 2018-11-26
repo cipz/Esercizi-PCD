@@ -23,8 +23,8 @@ public class Main {
 						 .filter(Entry::getKey)
 						 .forEach(Entry::getValue);
 
-		// Print all the transactions
-		//report.entrySet().forEach(System.out::println);
+		// Print all transactions from map
+		report.entrySet().forEach(System.out::println);
 
 	}//main
 

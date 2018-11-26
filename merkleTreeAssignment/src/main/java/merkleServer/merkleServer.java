@@ -10,51 +10,33 @@ public class merkleServer {
 
     public static void main(String[] args) throws IOException {
 
-/*        ServerSocket serverSocket = null;
-
-        System.out.println("Starting server...");
-
-        try {
-            serverSocket = new ServerSocket(2323);
-        } catch (IOException e) {
-            System.err.println("Error listening error on port: 2323");
-            System.exit(1);
-        }//try_catch
-
-        try {
-
-            while(true){
-                System.out.println("Waiting for a new connection...");
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Connection request from: " + clientSocket.getInetAddress());
-                new merkleServerThread(clientSocket, mTree);
-            }//while
-
-        } catch (IOException e) {
-
-            System.err.println("Failed client connection");
-
-        }finally {
-
-            serverSocket.close();
-
-        }//try_catch_finally
-        */
-
         try (ServerSocket serverSocket = new ServerSocket(2323)) {
+
             System.out.println("Starting server...");
+            
             try{
+
+                // Always listen for a connection incoming from clients
                 while (true){
+
                     System.out.println("Waiting for a new connection...");
                     Socket clientSocket = serverSocket.accept();
+
+                    // When a new connection arrives a new Thread is created
                     System.out.println("Connection request from: " + clientSocket.getInetAddress());
                     new merkleServerThread(clientSocket, mTree);
+
                 }//while
+
             }catch (IOException e){
                 System.err.println("Failed client connection\nError: " + e);
             }finally {
+
+                // In case of Exceptions after these are catched, the serverSocket is closed
                 serverSocket.close();
+
             }//try_catch
+
         } catch (IOException e) {
             System.err.println("Error listening error on port: 2323\nError: " + e);
         }//try_catch
