@@ -23,12 +23,8 @@ public class Main {
 						 .filter(Entry::getKey)
 						 .forEach(Entry::getValue);
 
-		for(Boolean bool : report.keySet()) {
-			System.out.println(bool);
-			for (String str : report.get(bool))
-				System.out.println(str);
-			System.out.println();
-		}//for
+		// Print all the transactions
+		//report.entrySet().forEach(System.out::println);
 
 	}//main
 

@@ -24,7 +24,7 @@ public class merkleServerThread extends Thread {
     @Override
     public void run(){
 
-        System.out.println ("New server thread started " + currentThread().getId());
+        System.err.println ("New server thread started #" + currentThread().getId());
 
         try {
 
@@ -33,28 +33,26 @@ public class merkleServerThread extends Thread {
 
             String inputLine = in.readLine();
 
-            while (inputLine != null) {
+            while ((inputLine != null) && (!inputLine.equals("close"))) {
 
-                if(inputLine.equals("Close"))
-                    break;
-
-                //https://www.cs.uic.edu/~troy/spring05/cs450/sockets/EchoServer2b.java
-                // TODO: ricevere dal client la stirnga da validare, simulare la richiesta di creazione dei nodi, mandarli come singola stirnga separati da ,
-
-                System.out.println (currentThread().getId() + " server: " + inputLine);
+                System.out.println ("#" + currentThread().getId() + " request to verify: " + inputLine);
 
                 List<String> outputNodes = mTree.getNodesForValidation(inputLine);
                 String outputNodesString = outputNodes.stream().collect(Collectors.joining(","));
 
+                // Sending list of nodes required to verify the requested transaction to the client
                 out.println(outputNodesString);
 
+                // Read new request
                 inputLine = in.readLine();
 
             }//while
 
+            System.err.println("Closing thread #" + currentThread().getId());
+
+            clientSocket.close();
             out.close();
             in.close();
-            clientSocket.close();
 
         } catch (IOException e) {
             System.err.println("I/O exception with client");

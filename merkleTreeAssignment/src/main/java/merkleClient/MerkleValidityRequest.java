@@ -51,6 +51,7 @@ public class MerkleValidityRequest {
 		transactionValidityMap.put(true, new ArrayList<>());
 		transactionValidityMap.put(false, new ArrayList<>());
 
+		// 0. Opens a connection with the authority
 		Socket serverSocket  = null;
 		PrintWriter out = null;
 		BufferedReader in = null;
@@ -68,22 +69,30 @@ public class MerkleValidityRequest {
 		}//try_catch_catch
 
 		for (String currentTransaction : mRequests){
+
+			System.out.print("Verifying " + currentTransaction + " : ");
+
+			// Sending transaction to server
 			out.println(currentTransaction);
 
+			// Get list of nodes from server
 			String nodesFromServer = in.readLine();
-
-			System.out.println(nodesFromServer);
 
 			List<String> merkleNodes = Arrays.asList(nodesFromServer.split(","));
 
+			// Check the validity of the transaction
 			Boolean currentTransactionValidity = isTransactionValid(currentTransaction, merkleNodes);
+			System.out.println(currentTransactionValidity );
 
+			// Put the transaction in the map
 			transactionValidityMap.get(currentTransactionValidity).add(currentTransaction);
 
 		}//for
 
+		// Sending close message to the server
 		out.println("close");
 
+		// Closing the connection to the server
 		serverSocket.close();
 		out.close();
 		in.close();
@@ -92,10 +101,6 @@ public class MerkleValidityRequest {
 
 	}//checkWhichTransactionValid
 
-	private static void log(String str) {
-		System.out.println(str);
-	}//log()
-	
 	/**
 	 * 	Checks whether a transaction 'merkleTx' is part of the merkle tree.
 	 * 
@@ -107,6 +112,7 @@ public class MerkleValidityRequest {
 	 * */
 	private boolean isTransactionValid(String merkleTx, List<String> merkleNodes) {
 
+		// Hashing the merkle transaction that need validation
 		String hashedMerkleTx = HashUtil.md5Java(merkleTx);
 
 		List<String> newMerkleNodes = new ArrayList<>();
@@ -116,6 +122,7 @@ public class MerkleValidityRequest {
 
 		String computedRoot = newMerkleNodes.stream().reduce((x, y) -> HashUtil.md5Java(x.concat(y))).get();
 
+		// If the computed root is equal to the given root then returns true
 		return computedRoot.equals(mRoot);
 
 	}//isTransactionValid
