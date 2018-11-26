@@ -13,7 +13,7 @@ public class merkleServer {
         try (ServerSocket serverSocket = new ServerSocket(2323)) {
 
             System.out.println("Starting server...");
-            
+
             try{
 
                 // Always listen for a connection incoming from clients
