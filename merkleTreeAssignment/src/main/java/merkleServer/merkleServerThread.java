@@ -28,15 +28,17 @@ public class merkleServerThread extends Thread {
 
         try {
 
+            // Creating input and output objects
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true);
             BufferedReader in = new BufferedReader(new InputStreamReader( clientSocket.getInputStream()));
 
+            // Reading input from client
             String inputLine = in.readLine();
-
             while ((inputLine != null) && (!inputLine.equals("close"))) {
 
                 System.out.println ("#" + currentThread().getId() + " request to verify: " + inputLine);
 
+                // Interacting with the merkleTree object to get the nodes needed to validate the client string
                 List<String> outputNodes = mTree.getNodesForValidation(inputLine);
                 String outputNodesString = outputNodes.stream().collect(Collectors.joining(","));
 
@@ -50,13 +52,13 @@ public class merkleServerThread extends Thread {
 
             System.err.println("Closing thread #" + currentThread().getId());
 
+            // Closing the connection with the client
             clientSocket.close();
             out.close();
             in.close();
 
         } catch (IOException e) {
-            System.err.println("I/O exception with client");
-            System.exit(1);
+            System.err.println("I/O exception with client\nError: " + e);
         }//try_catch
 
     }//run

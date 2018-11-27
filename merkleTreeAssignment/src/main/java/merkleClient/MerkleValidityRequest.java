@@ -1,5 +1,6 @@
 package merkleClient;
 
+import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -51,51 +52,50 @@ public class MerkleValidityRequest {
 		transactionValidityMap.put(true, new ArrayList<>());
 		transactionValidityMap.put(false, new ArrayList<>());
 
-		// 0. Opens a connection with the authority
-		Socket serverSocket  = null;
-		PrintWriter out = null;
-		BufferedReader in = null;
+		PrintWriter out;
+		BufferedReader in;
 
-		try {
-			serverSocket = new Socket(authIPAddr, authPort);
+		try (Socket serverSocket = new Socket(authIPAddr, authPort)) {
+
+			System.out.println("New connection to: " + authIPAddr + " : " + authPort);
+
+			// Opening input / output channels
 			out = new PrintWriter(serverSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+
+			for (String currentTransaction : mRequests){
+
+				System.out.print("Verifying " + currentTransaction + " : ");
+
+				// Sending transaction to server
+				out.println(currentTransaction);
+
+				// Get list of nodes from server
+				String nodesFromServer = in.readLine();
+				List<String> merkleNodes = Arrays.asList(nodesFromServer.split(","));
+
+				// Check the validity of the transaction
+				Boolean currentTransactionValidity = isTransactionValid(currentTransaction, merkleNodes);
+				System.out.println(currentTransactionValidity );
+
+				// Put the transaction in the map
+				transactionValidityMap.get(currentTransactionValidity).add(currentTransaction);
+
+			}//for
+
+			// Sending close message to the server
+			out.println("close");
+
+			// Closing the connection to the server
+			serverSocket.close();
+			out.close();
+			in.close();
+
 		} catch (UnknownHostException e) {
-			System.err.println("Unknown Host: " + authIPAddr);
-			System.exit(1);
+			System.err.println("Unknown Host: " + authIPAddr + "\nError: " + e);
 		} catch (IOException e) {
-			System.err.println("Couldn't get I/O from: " + authIPAddr);
-			System.exit(1);
+			System.err.println("Couldn't get I/O from: " + authIPAddr + "\nError: " + e);
 		}//try_catch_catch
-
-		for (String currentTransaction : mRequests){
-
-			System.out.print("Verifying " + currentTransaction + " : ");
-
-			// Sending transaction to server
-			out.println(currentTransaction);
-
-			// Get list of nodes from server
-			String nodesFromServer = in.readLine();
-
-			List<String> merkleNodes = Arrays.asList(nodesFromServer.split(","));
-
-			// Check the validity of the transaction
-			Boolean currentTransactionValidity = isTransactionValid(currentTransaction, merkleNodes);
-			System.out.println(currentTransactionValidity );
-
-			// Put the transaction in the map
-			transactionValidityMap.get(currentTransactionValidity).add(currentTransaction);
-
-		}//for
-
-		// Sending close message to the server
-		out.println("close");
-
-		// Closing the connection to the server
-		serverSocket.close();
-		out.close();
-		in.close();
 
 		return transactionValidityMap;
 
