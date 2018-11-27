@@ -58,6 +58,7 @@ To execute the unit tests go on and type:
 You can import the project in your favourite IDE by following the available Import Gradle Project-like wizzard.
 
 ## The Exercises
+
 The code is commented and you should fill in the missing implementation. Some test cases are there to help guide you during the development process.
 Pay careful attention to them! You can add additional helper methods if you retain them useful.
 
@@ -86,3 +87,8 @@ Note: No server implementation is required. For this purpose, one could use the 
 discussed during the lectures. 
 
 Note: Exception handling of events occurring in the client side is very important.
+
+### Personal notes
+
+To complete this exercise I have followed the examples on [this tutorial](https://www.cs.uic.edu/~troy/spring05/cs450/sockets/socket.html)
+<!-- https://www.cs.uic.edu/~troy/fall04/cs441/drake/sockets.html -->

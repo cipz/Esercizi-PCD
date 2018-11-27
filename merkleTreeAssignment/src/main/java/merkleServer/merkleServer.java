@@ -3,13 +3,19 @@ package merkleServer;
 import java.net.*;
 import java.io.*;
 
-// Reference site: https://www.cs.uic.edu/~troy/spring05/cs450/sockets/socket.html
+/**
+ * Class that implements the server object that listens for incoming client communication requests
+ * and for each one opens a new Socket that is then passed to the serverThread object so that the server can
+ * listen for other incoming connection requests
+ *
+ * */
 public class merkleServer {
 
-    protected static merkleTree mTree = new merkleTree();
+    private static merkleTree mTree = new merkleTree();
 
     public static void main(String[] args) throws IOException {
 
+        // Trying to open the socket to listen for connections
         try (ServerSocket serverSocket = new ServerSocket(2323)) {
 
             System.out.println("Starting server...");
@@ -20,6 +26,8 @@ public class merkleServer {
                 while (true){
 
                     System.out.println("Waiting for a new connection...");
+
+                    //Blocking method that waits for a connection request to arrive
                     Socket clientSocket = serverSocket.accept();
 
                     // When a new connection arrives a new Thread is created

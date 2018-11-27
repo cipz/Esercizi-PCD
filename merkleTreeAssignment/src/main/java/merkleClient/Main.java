@@ -24,7 +24,7 @@ public class Main {
 						 .forEach(Entry::getValue);
 
 		// Print all transactions from map
-		report.entrySet().forEach(System.out::println);
+		//report.entrySet().forEach(System.out::println);
 
 	}//main
 

@@ -8,11 +8,21 @@ import java.net.Socket;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class that implementing a thread that acts as a server for a single client
+ */
 public class merkleServerThread extends Thread {
 
     private Socket clientSocket;
     private merkleTree mTree;
 
+    /**
+     *
+     * Sole constructor of this class - marked public.
+     *
+     * @param clientSocket Socket: socket on which a communication with the client is required
+     * @param mTree merkleTree: object that contains all the nodes of the tree
+     */
     public merkleServerThread(Socket clientSocket, merkleTree mTree){
 
         this.clientSocket = clientSocket;
@@ -21,6 +31,10 @@ public class merkleServerThread extends Thread {
 
     }//merkleServerThread constructor
 
+    /**
+     * Method that contains the communication with the client
+     * Can be concurrent with other clients
+     */
     @Override
     public void run(){
 
