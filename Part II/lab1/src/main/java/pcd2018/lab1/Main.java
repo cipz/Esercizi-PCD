@@ -17,12 +17,12 @@ public class Main {
     // TODO...
 
     // Lettura dei file di input
-
     Stream<String> filenames = Stream
         .of("source-a.xz", "source-b.xz", "source-c.xz", "source-d.xz", "source-e.xz", "source-f.xz", "source-g.xz")
         .map(s -> "src/main/resources/" + s);
 
     // TODO...
+
 
     // Trasformazione dei record letti
 

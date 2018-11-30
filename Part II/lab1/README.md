@@ -1,31 +1,3 @@
-# Programmazione Concorrente e Distribuita 2018
-
-Questo repository contiene le slide ed il codice di esempio discusso a lezione per il corso di Programmazione Concorrente e Distribuita per l'A.A. 2018 dell'Università di Padova, Facoltà di Matematica, Corso di Laurea di Informatica (Ordinamento 2011).
-
-Il repository è così organizzato:
-
-    README.md : questo file
-    src : codice sorgente presentato a lezione
-    build.gradle, settings.gradle : istruzioni per la compilazione con lo strumento (Gradle)[https://gradle.org]
-    config : configurazioni per gli strumenti di analisi statica del codice
-    slides : slide delle lezioni
-    papers : documenti citati a lezione liberamente distribuibili o link interessanti.
-
-Per predisporre l'esecuzione dei programmi d'esempio con l'IDE Eclipse, usare il comando `gradle eclipse`. Per usare l'IDE JIdea usare il comando `gradle idea`.
-
-La maggior parte dei programmi eseguibili direttamente è richiamabile come un task specifico, per es. `gradle singleThreadPool`.
-
-Le slide si possono consultare anche ai seguenti indirizzi:
-
-    Lezione 13: [http://pcd2018.s3-website.eu-central-1.amazonaws.com/lesson1.html]
-                [http://pcd2018.s3-website.eu-central-1.amazonaws.com/lesson1-nb.html]
-    Lezione 14: [http://pcd2018.s3-website.eu-central-1.amazonaws.com/lesson2.html]
-                [http://pcd2018.s3-website.eu-central-1.amazonaws.com/lesson2-nb.html]
-    Lezione 15: [http://pcd2018.s3-website.eu-central-1.amazonaws.com/lesson3.html]
-                [http://pcd2018.s3-website.eu-central-1.amazonaws.com/lesson3-nb.html]
-
-La versione `-nb` è priva dello sfondo, per una più facile stampa. Si può ottenere il layout per la stampa aggiungendo all'URL il parametro `?print-pdf`. Aggiungendo `?print-pdf&showNotes=true` si ottiene anche la sovraimpressione delle note per il presentatore.
-
 # Laboratorio 1
 
 Il laboratorio 1 è costituito da un insieme di classi di base che vanno completate per ottenere un risultato.
@@ -59,7 +31,7 @@ Record in cui leggere i dati dai file di ingresso.
 
 ### `pcd2018.lab1.bowling.BowlingGame`
 
-Classe che calcola il risultato di una partita di bowling per un giocatore. I test di questa classe sono contenuti nel package `pcd2018.lab1.bowling`. Il punteggio del bowling è un (kata classico)[http://codingdojo.org/kata/Bowling/]
+Classe che calcola il risultato di una partita di bowling per un giocatore. I test di questa classe sono contenuti nel package `pcd2018.lab1.bowling`. Il punteggio del bowling è un [kata classico](http://codingdojo.org/kata/Bowling/).
 
 ### `pcd2018.lab1.Main`
 
@@ -67,7 +39,7 @@ Classe principale che regge tutto il calcolo. Va riempita a partire dal codice e
 
 ### `pcd2018.lab1.ScoreReader` (test: `pcd2018.lab1.ScoreReaderTest`)
 
-La responsabilità di questa classe è di leggere un file (di chi gli viene dato il nome) e ottenere da ogni riga un record con i dati di gioco. La classe non è thread-safe, nè avvia thread: il controllo dell'esecuzione è a carico del chiamante.
+La responsabilità di questa classe è di leggere un file (di cui gli viene dato il nome) e ottenere da ogni riga un record con i dati di gioco. La classe non è thread-safe, nè avvia thread: il controllo dell'esecuzione è a carico del chiamante.
 Se il file è esaurito, il metodo `get()` deve ritornare `null`.
 
 ### `pcd2018.lab1.GameRecordToData` (test: `pcd2018.lab1.GameRecordToDataTest`)

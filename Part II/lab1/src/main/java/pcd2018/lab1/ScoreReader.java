@@ -19,7 +19,11 @@ public class ScoreReader implements Supplier<GameRecord> {
   private BufferedReader reader;
 
   public ScoreReader(String fileName) throws FileNotFoundException, IOException {
+
     reader = new BufferedReader(new InputStreamReader(new XZInputStream(new FileInputStream(fileName))));
+
+
+
   }
 
   @Override
