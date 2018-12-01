@@ -23,7 +23,6 @@ public class Main {
 
     // TODO...
 
-
     // Trasformazione dei record letti
 
     // TODO...
