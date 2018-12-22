@@ -31,13 +31,7 @@ public class DiffieHellman {
   public List<Integer> crack(long publicA, long publicB) {
     List<Integer> res = new ArrayList<Integer>();
 
-    for(int i = 0; i <= LIMIT; i++){
-      for(int j = 0; j <= LIMIT; j++){
 
-        
-
-      }
-    }
 
     return res;
   }
