@@ -1,4 +1,4 @@
-package pcd2018.exe2;
+package main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,13 @@ public class DiffieHellman {
   public List<Integer> crack(long publicA, long publicB) {
     List<Integer> res = new ArrayList<Integer>();
 
-    
+    for(int i = 0; i <= LIMIT; i++){
+      for(int j = 0; j <= LIMIT; j++){
+
+
+
+      }
+    }
 
     return res;
   }
