@@ -8,6 +8,12 @@
 
 .idea
 DiffieHellman.iml
+config
+out
+build.gradle
+gradlew
+gradlew.bat
+settings.gradle
 
 # User-specific stuff
 .idea/**/workspace.xml
