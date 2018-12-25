@@ -1,6 +1,8 @@
 package pcd2018.exe2;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,8 +13,7 @@ public class DiffieHellman {
   /**
    * Limite massimo dei valori segreti da cercare
    */
-  //private static final int LIMIT = 65536;
-  private static final int LIMIT = 1024;
+  private static final int LIMIT = 65536;
 
   private final long p;
   private final long g;
@@ -32,32 +33,29 @@ public class DiffieHellman {
   public List<Integer> crack(long publicA, long publicB) {
     List<Integer> res = new ArrayList<Integer>();
 
-    /*
-    * possibili opzioni:
-    *
-    * - un numero di thread uguale al numero di core
-    * - parallelstream
-    *
-    * */
+    System.out.println("\n\n\n");
 
-    System.out.println(Runtime.getRuntime().availableProcessors());
+    Date date = new Date();
+    System.out.println(new Timestamp(date.getTime()));
 
-    /*
-    // Senza paralellismo
-    for(int a = 0; a <= LIMIT; a++){
-      for(int b = 0; b <= LIMIT; b++){
+    int nLogicCores = Runtime.getRuntime().availableProcessors();
+    int partialLimit = LIMIT / (nLogicCores);
 
-        Long calc_a = DiffieHellmanUtils.modPow(g, a, p);
-        Long calc_b = DiffieHellmanUtils.modPow(g, b, p);
+    List<DiffieHellmanThread> threads = new ArrayList<>();
 
-        if((publicA == calc_a) && (publicB == calc_b)){
-          res.add(a);
-          res.add(b);
-        }
-        System.out.println();
+    for(int i = 0; i < nLogicCores; i++)
+      threads.add(new DiffieHellmanThread(partialLimit * i + 1, partialLimit * (i+1), p ,g, publicA, publicB));
+
+    for(int i = 0; i < nLogicCores; i++) {
+      try {
+        threads.get(i).t.join();
+        res.addAll(threads.get(i).getPartialRes());
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
     }
-    */
+
+    System.out.println(new Timestamp(date.getTime()));
 
     return res;
   }
