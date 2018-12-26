@@ -35,7 +35,7 @@ Le coppie da verificare quindi sono solo 2^32.
 #### Obbiettivo dell'esercizio
 L' obbiettivo dell'esercizio è organizzare il lavoro di attraversamento dello spazio di ricerca in modo da utilizzare più thread contemporaneamente, e occupare tutti i core disponibili.
 
-####Scelte procedurali
+#### Scelte procedurali
 Per svolgere l'esercizio ho scelto di utilizzare una classe interna ***DiffieHellmanThread***  che si occupa del calcolo dei possibili valori salvandoli prima in due liste separate per poi confrontare i valori trovati.
 Questa classe implementa la classe ***Runnable*** e viene fornita di un costruttore che inizializza le variabili interne alla classe con quelli passati per creare e poi far partire un nuovo thread.
 Nel metodo *crack* di ***DiffieHellman*** prendo il numero di core logici del processore e chiamo tante volte DiffieHellmanThread per generare tanti thread quanti gli *n* core logici presenti.
