@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DiffieHellman {
 
-  public class DiffieHellManThread implements Runnable{
+  public class DiffieHellmanThread implements Runnable{
 
     int start;
     int stop;
@@ -20,7 +20,7 @@ public class DiffieHellman {
     Thread t;
     List<Integer> partialRes;
 
-    public DiffieHellManThread(int start, int stop, long publicA, long publicB){
+    public DiffieHellmanThread(int start, int stop, long publicA, long publicB){
       this.start = start;
       this.stop = stop;
       this.publicA = publicA;
@@ -95,10 +95,10 @@ public class DiffieHellman {
     int nLogicCores = Runtime.getRuntime().availableProcessors();
     int partialLimit = LIMIT / (nLogicCores);
 
-    List<DiffieHellManThread> threads = new ArrayList<>();
+    List<DiffieHellmanThread> threads = new ArrayList<>();
 
     for(int i = 0; i < nLogicCores; i++)
-      threads.add(new DiffieHellManThread(partialLimit * i + 1, partialLimit * (i+1), publicA, publicB));
+      threads.add(new DiffieHellmanThread(partialLimit * i + 1, partialLimit * (i+1), publicA, publicB));
 
     for(int i = 0; i < nLogicCores; i++) {
       try {
