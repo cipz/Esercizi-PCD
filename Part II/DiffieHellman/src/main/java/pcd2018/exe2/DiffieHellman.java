@@ -10,6 +10,60 @@ import java.util.List;
  */
 public class DiffieHellman {
 
+  public class DiffieHellManThread implements Runnable{
+
+    int start;
+    int stop;
+    long publicA;
+    long publicB;
+
+    Thread t;
+    List<Integer> partialRes;
+
+    public DiffieHellManThread(int start, int stop, long publicA, long publicB){
+      this.start = start;
+      this.stop = stop;
+      this.publicA = publicA;
+      this.publicB = publicB;
+
+      partialRes = new ArrayList<>();
+
+      t = new Thread(this);
+      t.start();
+    }
+
+    @Override
+    public void run(){
+      System.out.println("Starting thread: " + t.getId() + "(" + start + ", " + stop +  ")");
+
+      List<Long> aList = new ArrayList<>();
+      List<Long> bList = new ArrayList<>();
+
+      int partialResCount = 0;
+
+      for(int i = start; i <= stop; i++){
+        aList.add(DiffieHellmanUtils.modPow(publicA, i, p));
+        bList.add(DiffieHellmanUtils.modPow(publicB, i, p));
+      }
+
+      for(int i = 0; i <= stop-start; i++){
+        for(int j = 0; j <= stop-start; j++){
+          if(aList.get(i).equals(bList.get(j))) {
+            partialRes.add(start + j);
+            partialRes.add(start + i);
+            partialResCount++;
+          }
+        }
+      }
+      System.out.println("Ending thread: " + t.getId() + " (" + start + ", " + stop +  "); Found matches: " + partialResCount);
+    }
+
+    List<Integer> getPartialRes(){
+      return partialRes;
+    }
+
+  }
+
   /**
    * Limite massimo dei valori segreti da cercare
    */
@@ -41,10 +95,10 @@ public class DiffieHellman {
     int nLogicCores = Runtime.getRuntime().availableProcessors();
     int partialLimit = LIMIT / (nLogicCores);
 
-    List<DiffieHellmanThread> threads = new ArrayList<>();
+    List<DiffieHellManThread> threads = new ArrayList<>();
 
     for(int i = 0; i < nLogicCores; i++)
-      threads.add(new DiffieHellmanThread(partialLimit * i + 1, partialLimit * (i+1), p ,g, publicA, publicB));
+      threads.add(new DiffieHellManThread(partialLimit * i + 1, partialLimit * (i+1), publicA, publicB));
 
     for(int i = 0; i < nLogicCores; i++) {
       try {
