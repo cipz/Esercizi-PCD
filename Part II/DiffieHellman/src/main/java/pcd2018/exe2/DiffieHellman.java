@@ -13,16 +13,16 @@ public class DiffieHellman {
     int start;
     int stop;
     long publicA;
-    long publicB;
+    List<Long> bList;
 
     Thread t;
     List<Integer> partialRes;
 
-    public DiffieHellmanThread(int start, int stop, long publicA, long publicB){
+    public DiffieHellmanThread(int start, int stop, long publicA, List<Long> bList){
       this.start = start;
       this.stop = stop;
       this.publicA = publicA;
-      this.publicB = publicB;
+      this.bList = bList;
 
       partialRes = new ArrayList<>();
 
@@ -33,17 +33,13 @@ public class DiffieHellman {
     @Override
     public void run(){
       List<Long> aList = new ArrayList<>();
-      List<Long> bList = new ArrayList<>();
-
-      for(int i = start; i <= stop; i++){
-        aList.add(DiffieHellmanUtils.modPow(publicA, i, p));
-        bList.add(DiffieHellmanUtils.modPow(publicB, i, p));
-      }
+      for(int a = start; a <= stop; a++)
+        aList.add(DiffieHellmanUtils.modPow(publicA, a, p));
 
       for(int i = 0; i <= stop-start; i++){
-        for(int j = 0; j <= stop-start; j++){
+        for(int j = 0; j < LIMIT; j++){
           if(aList.get(i).equals(bList.get(j))) {
-            partialRes.add(start + j);
+            partialRes.add(j + 1);
             partialRes.add(start + i);
           }
         }
@@ -86,8 +82,13 @@ public class DiffieHellman {
 
     List<DiffieHellmanThread> threads = new ArrayList<>();
 
+    List<Long> bList = new ArrayList<>();
+
+    for(int b = 1; b <= LIMIT; b++)
+      bList.add(DiffieHellmanUtils.modPow(publicB, b, p));
+
     for(int i = 0; i < nLogicCores; i++)
-      threads.add(new DiffieHellmanThread(partialLimit * i + 1, partialLimit * (i+1), publicA, publicB));
+      threads.add(new DiffieHellmanThread(partialLimit * i + 1, partialLimit * (i+1), publicA, bList));
 
     for(int i = 0; i < nLogicCores; i++) {
       try {
