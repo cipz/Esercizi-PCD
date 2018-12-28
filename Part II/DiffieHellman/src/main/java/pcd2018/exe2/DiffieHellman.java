@@ -1,8 +1,6 @@
 package pcd2018.exe2;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,12 +32,8 @@ public class DiffieHellman {
 
     @Override
     public void run(){
-      System.out.println("Starting thread: " + t.getId() + "(" + start + ", " + stop +  ")");
-
       List<Long> aList = new ArrayList<>();
       List<Long> bList = new ArrayList<>();
-
-      int partialResCount = 0;
 
       for(int i = start; i <= stop; i++){
         aList.add(DiffieHellmanUtils.modPow(publicA, i, p));
@@ -51,11 +45,9 @@ public class DiffieHellman {
           if(aList.get(i).equals(bList.get(j))) {
             partialRes.add(start + j);
             partialRes.add(start + i);
-            partialResCount++;
           }
         }
       }
-      System.out.println("Ending thread: " + t.getId() + " (" + start + ", " + stop +  "); Found matches: " + partialResCount);
     }
 
     List<Integer> getPartialRes(){
@@ -89,9 +81,6 @@ public class DiffieHellman {
 
     System.out.println("\n\n\n");
 
-    Date date = new Date();
-    System.out.println(new Timestamp(date.getTime()));
-
     int nLogicCores = Runtime.getRuntime().availableProcessors();
     int partialLimit = LIMIT / (nLogicCores);
 
@@ -108,8 +97,6 @@ public class DiffieHellman {
         e.printStackTrace();
       }
     }
-
-    System.out.println(new Timestamp(date.getTime()));
 
     return res;
   }
