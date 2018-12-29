@@ -43,7 +43,7 @@ A ciascun thread vengono assegnati da calcolare *LIMIT / nLogicCores* valori.
 Quando nel thread viene trovato un valore corretto, questo viene salvato in una lista dei risultati parziali.
 Viene utilizzato un ciclo che aspetta che finiscano tutti i thread utilizzando il metodo *join*, prima di continuare l'esecuzione del programma.
 Da ciascun thread generato vengono recuperati i risultati parziali per aggiungerli in coda alla lista *res* contenente tutti i risultati dello spazio tra 1 e *LIMIT* tramite un metodo *getPartialRes*.
-I tempi di esecuzione del test variano tra i *33~* e *36~* secondi.
+I tempi di esecuzione del test variano tra i *48~* e *54~* secondi.
 
 ------
 Per la realizzazione dell'esercizio ho preso spunto dalla spiegazione sulla creazione dei valori e sullo scambio di chiavi che avviene nell'algoritmo DiffieHellman del dipartimento di matematica che si può trovare a [questo link](https://www.math.brown.edu/~jhs/MathCrypto/SampleSections.pdf).
