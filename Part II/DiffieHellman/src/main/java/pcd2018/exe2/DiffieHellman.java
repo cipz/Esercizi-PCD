@@ -2,7 +2,6 @@ package pcd2018.exe2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Classe da completare per l'esercizio 2.
@@ -79,7 +78,7 @@ public class DiffieHellman {
     System.out.println("\n\n\n");
 
     int nLogicCores = Runtime.getRuntime().availableProcessors();
-    int partialLimit = LIMIT / (nLogicCores);
+    int partialLimit = LIMIT / nLogicCores;
 
     List<DiffieHellmanThread> threads = new ArrayList<>();
 
